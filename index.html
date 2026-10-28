@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI-Based Student Performance Prediction System</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav id="nav" class="hide" aria-label="Main">
+<b>Student Performance AI</b>
+<button data-p="dashboard">Dashboard</button><button data-p="add">Add Student</button><button data-p="predict">Prediction</button><button data-p="reports">Reports</button><button data-p="home">Home</button><button id="logout">Logout</button>
+</nav>
+<nav id="nav0" aria-label="Main"><b>Student Performance AI</b><button data-p="home">Home</button><button data-p="login">Login</button></nav>
+
+<main>
+<!-- HOME -->
+<section id="home">
+<div class="hero">
+<h1>AI-Based Student Performance Prediction System</h1>
+<p>Enter attendance, marks and study habits. The system predicts how a student is likely to perform and flags who needs support before exams.</p>
+<div class="row"><button class="btn" data-go="login">Get started</button><button class="btn alt" data-go="login">Login</button></div>
+</div>
+<div class="grid g4">
+<div class="card"><h3>Predict performance</h3><p>A trained model estimates the final result from academic and behavior data.</p></div>
+<div class="card"><h3>Spot at-risk students</h3><p>Low, medium and high risk levels show where to step in.</p></div>
+<div class="card"><h3>Recommend actions</h3><p>Each prediction lists what the student should improve.</p></div>
+<div class="card"><h3>Download reports</h3><p>Search, filter and export saved student records.</p></div>
+</div>
+<div class="card" style="margin-top:14px"><h2>About the project</h2><p>This project applies machine learning to student records so teachers can act early. Teachers add student details, run a prediction, and review results on a dashboard and in reports.</p></div>
+</section>
+
+<!-- LOGIN -->
+<section id="login" class="hide">
+<div class="card" style="max-width:400px;margin:30px auto">
+<h2>Teacher login</h2>
+<div class="grid"><div><label for="u">Username or email</label><input id="u" autocomplete="username"></div>
+<div><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password"></div></div>
+<div class="row"><button class="btn" id="doLogin">Log in</button></div>
+<p class="msg" id="lmsg">Demo mode: any username and password works.</p>
+<p class="msg"><a href="#" onclick="return false">Forgot password?</a> &nbsp; <a href="#" onclick="return false">Register</a></p>
+</div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="hide">
+<h2>Dashboard</h2>
+<div class="grid g4" id="stats"></div>
+<div class="grid g2" style="margin-top:14px">
+<div class="card"><h3>Average marks by assessment</h3><div class="bars" id="bars"></div><div class="bl" id="bl"></div></div>
+<div class="card"><h3>Risk distribution</h3><div id="risk"></div></div>
+</div>
+</section>
+
+<!-- ADD -->
+<section id="add" class="hide">
+<h2>Add student details</h2>
+<form class="card" id="sf" onsubmit="return false">
+<div class="form">
+<div><label for="sid">Student ID</label><input id="sid" required></div>
+<div><label for="nm">Student name</label><input id="nm" required></div>
+<div><label for="cr">Class or course</label><input id="cr"></div>
+<div><label for="ag">Age</label><input id="ag" type="number" min="5" max="60"></div>
+<div><label for="at">Attendance (%)</label><input id="at" type="number" min="0" max="100" required></div>
+<div><label for="im">Internal marks (%)</label><input id="im" type="number" min="0" max="100" required></div>
+<div><label for="am">Assignment marks (%)</label><input id="am" type="number" min="0" max="100" required></div>
+<div><label for="pm">Previous exam marks (%)</label><input id="pm" type="number" min="0" max="100" required></div>
+<div><label for="sh">Study hours per day</label><input id="sh" type="number" min="0" max="16" step="0.5" required></div>
+</div>
+<div class="row"><button class="btn" id="save">Save student</button><button class="btn alt" id="upd">Update details</button><button class="btn alt" id="rst" type="button">Reset form</button></div>
+<p class="msg" id="smsg" role="status"></p>
+</form>
+</section>
+
+<!-- PREDICT -->
+<section id="predict" class="hide">
+<h2>Performance prediction</h2>
+<div class="grid g2">
+<div class="card">
+<div class="form" style="grid-template-columns:1fr 1fr">
+<div style="grid-column:1/-1"><label for="pid">Student ID or name</label><input id="pid" list="ids" placeholder="Type to load a saved student"><datalist id="ids"></datalist></div>
+<div><label for="pa">Attendance (%)</label><input id="pa" type="number" min="0" max="100"></div>
+<div><label for="pi">Internal marks</label><input id="pi" type="number" min="0" max="100"></div>
+<div><label for="pg">Assignment marks</label><input id="pg" type="number" min="0" max="100"></div>
+<div><label for="pp">Previous exam marks</label><input id="pp" type="number" min="0" max="100"></div>
+<div style="grid-column:1/-1"><label for="ph">Study hours per day</label><input id="ph" type="number" min="0" max="16" step="0.5"></div>
+</div>
+<div class="row"><button class="btn" id="go">Predict performance</button></div>
+<p class="msg" id="pmsg" role="status"></p>
+</div>
+<div class="card" id="out"><h3>Student performance report</h3><p class="msg">Fill in the form and select Predict performance. Results appear here.</p></div>
+</div>
+</section>
+
+<!-- REPORTS -->
+<section id="reports" class="hide">
+<h2>Student reports</h2>
+<div class="row" style="margin:0 0 12px"><input id="q" placeholder="Search by ID or name" style="max-width:260px" aria-label="Search students">
+<select id="fl" style="max-width:200px" aria-label="Filter by performance"><option value="">All performance</option><option>Excellent</option><option>Good</option><option>Average</option><option>Needs improvement</option></select>
+<button class="btn alt" id="dl">Download all (CSV)</button></div>
+<div class="card wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Attendance</th><th>Avg marks</th><th>Predicted</th><th>Risk</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
+</section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
