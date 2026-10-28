@@ -6,6 +6,20 @@ import pandas as pd
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
+import os
+from flask import send_from_directory
+
+@app.route("/")
+def home():
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), "index.html")
+
+@app.route("/style.css")
+def stylesheet():
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), "style.css")
+
+@app.route("/app.js")
+def javascript():
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), "app.js")
 M = joblib.load("model.pkl")
 DB = "students.db"
 
