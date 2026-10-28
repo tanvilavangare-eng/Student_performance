@@ -1,5 +1,6 @@
-pandas
-streamlit
-scikit-learn
+
+Flask
+gunicorn
 joblib
-flask
+pandas
+scikit-learn
